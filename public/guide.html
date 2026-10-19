@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>使い方｜AI業務分解ナビ</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2317365d'/%3E%3Crect x='6' y='6' width='9' height='6' rx='1.5' fill='%23fff'/%3E%3Cpath d='M23 13l5 5-5 5-5-5z' fill='%23fff'/%3E%3Crect x='6' y='20' width='9' height='6' rx='1.5' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+:root{--ink:#202124;--muted:#5f6368;--navy:#17365d;--blue:#1a73e8;--line:#dde3ec;--bg:#f5f7fa;--soft:#eef3fb;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans JP","Yu Gothic",sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;font-size:15px}
+header{background:var(--navy);color:#fff;padding:14px 18px}
+.hwrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:20px;margin:0}
+header p{margin:0;font-size:12px;opacity:.85}
+header .spacer{flex:1}
+a.btn{display:inline-block;background:#fff;color:var(--navy);font-weight:bold;text-decoration:none;border-radius:6px;padding:8px 14px;font-size:14px}
+a.btn.primary{background:var(--blue);color:#fff}
+.layout{max-width:1100px;margin:0 auto;padding:20px 16px 60px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px}
+nav.toc{position:sticky;top:16px;align-self:start;font-size:13px;background:#fff;border:1px solid #ddd;border-radius:10px;padding:12px 14px}
+nav.toc b{display:block;margin-bottom:4px;color:var(--navy)}
+nav.toc ol{margin:0;padding-left:20px}
+nav.toc a{color:var(--ink);text-decoration:none}
+nav.toc a:hover{color:var(--blue);text-decoration:underline}
+nav.toc .sub{margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+section{background:#fff;border:1px solid #ddd;border-radius:10px;padding:18px 22px;margin-bottom:16px;scroll-margin-top:12px}
+h2{font-size:19px;color:var(--navy);margin:0 0 10px;padding-bottom:6px;border-bottom:2px solid var(--soft)}
+h3{font-size:16px;margin:18px 0 6px}
+p{margin:6px 0}
+ul,ol{margin:6px 0;padding-left:22px}
+li{margin:3px 0}
+.lead{font-size:16px}
+.note{background:#e8f4ea;border:1px solid #b7dfc0;color:#0d4f22;border-radius:8px;padding:10px 14px;margin:10px 0}
+.warn{background:#fff8e1;border-left:4px solid #e0a800;border-radius:4px;padding:10px 14px;margin:10px 0}
+.tip{background:var(--soft);border-radius:8px;padding:10px 14px;margin:10px 0}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps>li{counter-increment:s;position:relative;padding-left:44px;margin:12px 0}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:flex;align-items:center;justify-content:center}
+.ui{display:inline-block;background:#e8eef7;color:var(--navy);font-weight:bold;border-radius:5px;padding:0 7px;font-size:13px;white-space:nowrap}
+.ui.blue{background:var(--blue);color:#fff}
+.ui.red{background:#fce8e6;color:#a50e0e}
+.err{color:#b3261e;font-weight:bold}.cau{color:#8a5a00;font-weight:bold}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:#f1f4f9;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+figure{margin:12px 0}
+figure .img{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff;max-height:620px}
+figure img{display:block}
+figcaption{font-size:13px;color:var(--muted);margin-top:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sym{display:inline-block;vertical-align:middle;margin-right:6px}
+.good{color:#188038;font-weight:bold}.bad{color:#b3261e;font-weight:bold}
+.muted{color:var(--muted);font-size:13px}
+details{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:8px 0}
+summary{cursor:pointer;font-weight:bold}
+footer{max-width:1100px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:var(--muted)}
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static}
+  .two{grid-template-columns:1fr}
+  section{padding:16px}
+}
+@media print{
+  header .btn,nav.toc{display:none}
+  .layout{display:block}
+  section{break-inside:avoid-page;border:none;padding:0 0 12px}
+  figure .img{max-height:none;overflow:visible}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div>
+      <h1>AI業務分解ナビ 使い方</h1>
+      <p>業務を工程に分解し、担当者別のフロー図と改善候補を整理するツール</p>
+    </div>
+    <span class="spacer"></span>
+    <a class="btn" href="./">アプリを開く</a>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="目次">
+  <b>目次</b>
+  <ol>
+    <li><a href="#about">できること</a></li>
+    <li><a href="#before">はじめる前に</a></li>
+    <li><a href="#create">業務を作る</a></li>
+    <li><a href="#steps">工程を入力する</a></li>
+    <li><a href="#branch">判断・差し戻し</a></li>
+    <li><a href="#analysis">改善分析</a></li>
+    <li><a href="#result">図と結果を見る</a></li>
+    <li><a href="#save">保存・提出</a></li>
+  </ol>
+  <div class="sub">
+    <ol start="9">
+      <li><a href="#legend">図の見方</a></li>
+      <li><a href="#tips">上手に書くコツ</a></li>
+      <li><a href="#teacher">講師の方へ</a></li>
+      <li><a href="#rules">判定ルールと試算</a></li>
+      <li><a href="#faq">よくある質問</a></li>
+    </ol>
+  </div>
+</nav>
+
+<main>
+<section id="about">
+  <h2>1. このツールでできること</h2>
+  <p class="lead">自分の業務を「誰が・どの順に・どこで判断し・どこで戻るか」に分解して、担当者別の業務フロー図にします。そのうえで、工程ごとに AI活用・自動化・人の判断 などの改善候補を整理し、改善後の姿（To-Be）と時間短縮の目安を試算します。</p>
+  <figure>
+    <div class="img"><img src="guide/flow-asis.svg" alt="請求書業務の業務フロー図の例。営業担当・経理担当・経理マネージャーの3列に工程が並び、承認・差し戻し・入金・未入金の分岐がある" loading="lazy"></div>
+    <figcaption>例：請求書業務の現状（As-Is）フロー。アプリの「サンプル」ボタンで同じ内容を開けます。</figcaption>
+  </figure>
+  <p>流れは次の5ステップです。</p>
+  <ol>
+    <li>業務を作る（業務名・件数など）</li>
+    <li>工程を1行ずつ入力する → 図が自動でできる</li>
+    <li>承認・確認などの分かれ道（判断）と差し戻しを設定する</li>
+    <li>工程ごとに情報の種類やリスクを選び、改善方式を判定する</li>
+    <li>改善後の図・効果試算を確認し、ファイルに保存する</li>
+  </ol>
+</section>
+
+<section id="before">
+  <h2>2. はじめる前に（必ずお読みください）</h2>
+  <div class="note"><b>入力内容は、お使いのブラウザの中だけに保存されます。</b>サーバーには送信されず、作成者（講師・運営）にも見えません。</div>
+  <ul>
+    <li><b>パソコンのブラウザ</b>（Chrome・Edge など）での利用をおすすめします。スマートフォンでも表示できますが、工程表の入力は横スクロールになります。</li>
+    <li>同じパソコン・同じブラウザなら、閉じても次回そのまま続きから使えます。</li>
+    <li>別のパソコンで続ける・講師に提出する場合は、<span class="ui">ファイルに保存（JSON）</span>でファイルにしてください（<a href="#save">8. 保存・提出</a>）。</li>
+  </ul>
+  <div class="warn">
+    <b>入力しないでください：</b>実在の顧客名・個人名・連絡先、契約金額、社外秘の情報。<br>
+    業務の流れを整理するのが目的なので、「顧客A」「取引先」のように一般化した表現で十分です。
+  </div>
+  <div class="warn">ブラウザの履歴・Cookie（サイトデータ）を削除したり、シークレット（プライベート）ウィンドウで使ったりすると、保存した内容が消えます。大事な内容はこまめにファイルに保存してください。</div>
+</section>
+
+<section id="create">
+  <h2>3. 業務を作る</h2>
+  <ol class="steps">
+    <li>アプリを開き、画面上部の<span class="ui blue">＋ 新しい業務</span>を押します。<br><span class="muted">初めて開いたときはサンプル（請求書業務）が表示されています。見本として残しておいて構いません。</span></li>
+    <li>次の項目を入力します。
+      <div class="tablewrap"><table>
+        <tr><th>業務名 *</th><td>例：請求書発行、問い合わせ対応。<b>1つの業務＝始まりから終わりまでの一連の仕事</b>にします。</td></tr>
+        <tr><th>担当部署</th><td>例：経理、営業事務</td></tr>
+        <tr><th>作成者（任意）</th><td>講師に提出する場合は氏名を入れてください。ファイル名にも使われます。</td></tr>
+        <tr><th>月間処理件数</th><td>この業務を1か月に何件処理するか（概算）。月間・年間の削減時間の試算に使います。</td></tr>
+        <tr><th>現在の困りごと</th><td>例：確認に時間がかかる、担当者によってやり方が違う</td></tr>
+      </table></div>
+    </li>
+    <li>入力は自動で保存されます。「保存」ボタンはありません。</li>
+  </ol>
+  <p>上部のプルダウンで、作った業務を切り替えられます。<span class="ui">複製</span>は似た業務を作るとき、<span class="ui red">削除</span>は不要な業務を消すとき（元に戻せません）に使います。</p>
+</section>
+
+<section id="steps">
+  <h2>4. 工程を入力する（「① 流れ」タブ）</h2>
+  <p>画面中ほどの「工程」の表に、<b>1行に1工程</b>を上から順番に入力します。入力するたびに、上のフロー図が自動で描き直されます。</p>
+  <div class="tablewrap"><table>
+    <tr><th>担当者</th><td>その作業をする人・役割（例：営業担当、経理マネージャー）。<b>担当者ごとに図の縦の列（レーン）が分かれます。</b>一度入れた名前は候補として出てきます。表記を揃えてください（「経理」と「経理担当」は別の列になります）。</td></tr>
+    <tr><th>作業内容 *</th><td>「〜を〜する」の形で短く（15文字程度）。例：<b>請求書を作成する</b>。空の行は図に出ません。</td></tr>
+    <tr><th>種別</th><td>ふつうの作業は<b>作業</b>。結果によって次が変わる工程は<b>判断</b>（<a href="#branch">次の章</a>）。</td></tr>
+    <tr><th>次の工程</th><td>空のままなら<b>次の行</b>につながります。最後の行は自動で「終了」につながります。別の工程へ飛ぶ・戻るときだけ選びます。</td></tr>
+    <tr><th>分/件</th><td>1件あたり何分かかるか（概算でOK）</td></tr>
+    <tr><th>ツール</th><td>メール、Excel、紙、既存システム など</td></tr>
+    <tr><th>備考・例外</th><td>補足や例外のメモ。図の上でマウスを重ねると表示されます。</td></tr>
+  </table></div>
+  <p>行の右端のボタン：<span class="ui">↑</span><span class="ui">↓</span>で順番を入れ替え、<span class="ui">＋</span>でその下に行を追加、<span class="ui red">削除</span>で行を削除します。表の下の<span class="ui">＋ 工程を追加</span>で最後に追加できます。</p>
+  <div class="tip"><b>コツ：</b>まず「担当者」と「作業内容」だけを最後まで入れて流れを作り、そのあとで時間・ツール・分岐を足すと速く進みます。</div>
+</section>
+
+<section id="branch">
+  <h2>5. 判断（分かれ道）と差し戻しを設定する</h2>
+  <p>「承認する／差し戻す」「入金あり／なし」のように、<b>結果によって次の工程が変わる</b>ところは「判断」にします。図ではひし形になります。</p>
+  <ol class="steps">
+    <li>その行の<b>種別</b>を<b>判断</b>にします。作業内容は問いかけ形にすると読みやすくなります（例：<b>内容は正しいか？</b>）。</li>
+    <li><b>分岐1</b>：行き先の工程と条件を入れます（例：工程4へ／条件「承認」）。</li>
+    <li><b>分岐2</b>：もう一方の行き先と条件を入れます（例：工程2へ／条件「差し戻し」）。</li>
+  </ol>
+  <ul>
+    <li>行き先に<b>前の工程</b>を選ぶと、図では<b style="color:#e8710a">オレンジの点線（差し戻し）</b>で表示されます。</li>
+    <li>行き先に<b>終了</b>を選ぶと、そこで業務が終わります。</li>
+    <li>分岐は<b>2つまで</b>です。3つ以上に分かれる場合は、判断を2つ続けて表してください（例：「金額は10万円以上か？」→「新規取引先か？」）。</li>
+    <li>作業の行でも「次の工程」を選べば、別の工程に戻したり合流させたりできます（例：「顧客へ確認する」→「入金はあるか？」に戻る）。</li>
+  </ul>
+  <h3>入力チェックの表示</h3>
+  <p>フロー図のすぐ下に、入力の問題点が表示されます。</p>
+  <div class="tablewrap"><table>
+    <tr><th>表示</th><th>意味と直し方</th></tr>
+    <tr><td><span class="err">エラー：</span>判断工程には分岐を2つ設定してください</td><td>判断の行で、分岐1・分岐2の行き先を両方選んでください。</td></tr>
+    <tr><td><span class="err">エラー：</span>分岐の条件を入力してください</td><td>条件1・条件2（例：承認／差し戻し）を入れてください。</td></tr>
+    <tr><td><span class="err">エラー：</span>行き先が見つかりません</td><td>行き先の工程を削除したときに出ます。行き先を選び直してください。</td></tr>
+    <tr><td><span class="cau">注意：</span>つながっていない工程があります</td><td>どこからも矢印が来ない工程があります。前の工程の「次の工程」を見直してください。</td></tr>
+    <tr><td><span class="cau">注意：</span>終了につながらない流れがあります</td><td>戻り続けて終わらない流れがあります。どこかの分岐を「終了」または先の工程へつないでください。</td></tr>
+  </table></div>
+</section>
+
+<section id="analysis">
+  <h2>6. 改善分析（「② 改善分析」タブ）</h2>
+  <p>工程表の右上で<span class="ui">② 改善分析</span>に切り替え、工程ごとに次の3つを選ぶと、<b>改善方式が自動で判定</b>されます。</p>
+  <div class="tablewrap"><table>
+    <tr><th>情報の種類</th><td>その工程で主に扱う情報：定型データ／文章・メール／画像・PDF／音声／複合情報</td></tr>
+    <tr><th>ルールの明確さ</th><td>やり方が決まっているか：明確／一部例外あり／曖昧・都度判断</td></tr>
+    <tr><th>判断リスク</th><td>間違えたときの影響：低／中／高</td></tr>
+    <tr><th>改善希望</th><td>あなたの希望：AIに任せたい／ルールで自動化したい／人の判断を残したい／未定</td></tr>
+  </table></div>
+  <p>判定結果は「改善方式」の欄に<b>自動：〇〇</b>と表示され、横に判定理由が出ます。実態に合わないときは、プルダウンから<b>手動：〇〇</b>を選んで変更できます。</p>
+  <p>さらに、改善後の姿を具体的に書きたいときは次の2つを入れます（空欄なら自動）。</p>
+  <ul>
+    <li><b>改善後の工程名</b>：例「入金データから自動更新」。空欄なら「ルールで自動化：〜」のような定型文になります。</li>
+    <li><b>改善後 分/件</b>：改善後の見込み時間。空欄なら方式ごとの仮定の短縮率で計算します（<a href="#rules">12章</a>）。</li>
+  </ul>
+  <div class="warn">判定は入力内容にもとづく<b>簡易ルールによる仮説</b>で、AIが業務を理解して判断したものではありません。検討のたたき台として使い、最終判断は業務を知る人が行ってください。</div>
+</section>
+
+<section id="result">
+  <h2>7. 図と結果を確認する</h2>
+  <h3>フロー図</h3>
+  <p>図の右上で<span class="ui">現状（As-Is）</span>と<span class="ui">改善後（To-Be）</span>を切り替えます。To-Be では工程が改善方式ごとに色分けされ、改善前→改善後の時間が表示されます。</p>
+  <figure>
+    <div class="img"><img src="guide/flow-tobe.svg" alt="改善後（To-Be）のフロー図の例。工程が改善方式ごとに色分けされ、各工程の下に改善前と改善後の所要時間が表示されている" loading="lazy"></div>
+    <figcaption>例：改善後（To-Be）の図。色の意味は図の上の凡例に表示されます。</figcaption>
+  </figure>
+  <p><span class="ui">PNG保存</span>で画像として、<span class="ui">SVG保存</span>で拡大しても粗くならない図として保存できます。資料に貼るときに使ってください。</p>
+  <h3>改善候補の集計・効果試算・To-Be提案</h3>
+  <ul>
+    <li><b>改善候補の集計</b>：改善方式ごとの工程数</li>
+    <li><b>改善効果の試算</b>：1件あたりの現状時間・改善後時間・短縮時間と、月間処理件数から計算した月間・年間の削減時間</li>
+    <li><b>改善後（To-Be）の提案</b>：工程ごとの改善内容・判定理由・時間の変化</li>
+  </ul>
+</section>
+
+<section id="save">
+  <h2>8. 保存・提出・別の端末で続ける</h2>
+  <ol class="steps">
+    <li><span class="ui">ファイルに保存（JSON）</span>を押すと、表示中の業務が <code>業務名_作成者.json</code> としてダウンロードされます。</li>
+    <li>別のパソコンで続けるときは、そのパソコンでアプリを開き、<span class="ui">ファイルを開く</span>からこのファイルを選びます。</li>
+    <li><b>講師に提出するとき</b>は、作成者に氏名を入れてから保存し、指定の方法（メール添付・共有フォルダなど）でJSONファイルを送ってください。</li>
+  </ol>
+  <div class="tip">ファイルを開いても、今ある業務は上書きされません。新しい業務として一覧に追加されます。</div>
+</section>
+
+<section id="legend">
+  <h2>9. 図の見方</h2>
+  <div class="tablewrap"><table>
+    <tr><th>表示</th><th>意味</th></tr>
+    <tr><td>縦の列（レーン）</td><td>担当者。左から、工程に登場した順に並びます。</td></tr>
+    <tr><td><svg class="sym" width="54" height="22" aria-hidden="true"><rect x="1" y="2" width="52" height="18" rx="9" fill="#1f4fd8"/></svg>開始・終了</td><td>自動で表示されます（入力は不要）。</td></tr>
+    <tr><td><svg class="sym" width="54" height="22" aria-hidden="true"><rect x="1" y="2" width="52" height="18" rx="4" fill="#eaf1ff" stroke="#7fa3f5" stroke-width="1.5"/></svg>作業</td><td>ふつうの工程。左上の丸数字は工程番号、下の小さな文字は所要時間とツールです。</td></tr>
+    <tr><td><svg class="sym" width="54" height="22" aria-hidden="true"><polygon points="27,1 53,11 27,21 1,11" fill="#2f6df6"/></svg>判断</td><td>結果によって次が変わる工程。出ていく矢印の上に条件（承認／差し戻し など）が表示されます。</td></tr>
+    <tr><td><svg class="sym" width="54" height="22" aria-hidden="true"><line x1="2" y1="11" x2="46" y2="11" stroke="#4a5566" stroke-width="2"/><path d="M44,6L52,11L44,16z" fill="#4a5566"/></svg>実線の矢印</td><td>通常の流れ。別の列へ向かう矢印は、担当者間の受け渡しです。</td></tr>
+    <tr><td><svg class="sym" width="54" height="22" aria-hidden="true"><line x1="2" y1="11" x2="46" y2="11" stroke="#e8710a" stroke-width="2" stroke-dasharray="6 4"/><path d="M44,6L52,11L44,16z" fill="#e8710a"/></svg>オレンジの点線</td><td>差し戻し・やり直し（前の工程へ戻る流れ）。</td></tr>
+  </table></div>
+  <p class="muted">長い作業内容は図形の中で省略されます。図形にマウスを重ねると全文と備考が表示されます。</p>
+</section>
+
+<section id="tips">
+  <h2>10. 上手に書くコツ</h2>
+  <div class="two">
+    <div>
+      <p class="good">◯ よい例</p>
+      <ul>
+        <li>請求書を作成する</li>
+        <li>内容は正しいか？（判断）</li>
+        <li>担当者名は役割で統一（経理担当）</li>
+      </ul>
+    </div>
+    <div>
+      <p class="bad">✕ 避けたい例</p>
+      <ul>
+        <li>請求書作成とチェックと送付（1行に複数の作業）</li>
+        <li>確認（何を確認するのか不明）</li>
+        <li>山田さん（個人名）</li>
+      </ul>
+    </div>
+  </div>
+  <ul>
+    <li><b>粒度をそろえる：</b>1工程＝ひとりが続けて行う一まとまりの作業。担当者が替わるところで行を分けます。</li>
+    <li><b>規模の目安：</b>担当者は6名以内、工程は20個以内。それを超える場合は業務を分けると見やすくなります。</li>
+    <li><b>まず現状をそのまま：</b>As-Is は「あるべき姿」ではなく「今やっている通り」に書くと、改善点が見つけやすくなります。</li>
+  </ul>
+</section>
+
+<section id="teacher">
+  <h2>11. 講師の方へ（受講者の入力をまとめて見る）</h2>
+  <ol class="steps">
+    <li>受講者に、作成者（氏名）を入れてから<span class="ui">ファイルに保存（JSON）</span>し、提出するよう案内します。</li>
+    <li>集まったJSONファイルを講師のパソコンに置き、アプリの<span class="ui">ファイルを開く</span>で<b>まとめて選択</b>（Ctrl／Shift＋クリック）します。</li>
+    <li>画面下部の「この端末に保存されている業務」に、業務名・作成者・工程数・短縮見込みの一覧が表示されます。<span class="ui">開く</span>で各受講者のフロー図と分析を確認できます。</li>
+  </ol>
+  <div class="warn">
+    <ul>
+      <li>読み込んだ内容は講師のブラウザに保存されます。<b>共用パソコンでは講座終了後に削除</b>してください（各業務を開いて<span class="ui red">削除</span>）。</li>
+      <li>受講者のファイルは、提出先・保管期間など組織の情報管理ルールに沿って扱ってください。</li>
+      <li>このアプリには受講者が講師へ自動送信する機能はありません。提出はファイルの受け渡しで行います。</li>
+    </ul>
+  </div>
+  <div class="tip"><b>講座での進め方の例：</b>① サンプルで操作説明（5分）→ ② 各自で担当者と作業内容だけを入力（15分）→ ③ 判断・差し戻しを追加（10分）→ ④ 改善分析とTo-Be確認（15分）→ ⑤ JSONで提出、講師が一覧で共有・講評。</div>
+</section>
+
+<section id="rules">
+  <h2>12. 判定ルールと試算の前提</h2>
+  <h3>改善方式の判定（上から順に当てはまったもの）</h3>
+  <div class="tablewrap"><table>
+    <tr><th>条件</th><th>判定</th></tr>
+    <tr><td>情報の種類・ルールの明確さ・判断リスクのどれかが未設定</td><td>追加確認が必要</td></tr>
+    <tr><td>判断リスクが「高」</td><td>人の判断を中心</td></tr>
+    <tr><td>改善希望が「AIに任せたい」かつ 情報が文章・画像・音声・複合</td><td>AI＋人の確認</td></tr>
+    <tr><td>ルールが「明確」かつ（情報が定型データ または 希望が「ルールで自動化したい」）</td><td>通常の自動化候補</td></tr>
+    <tr><td>情報が文章・画像・音声・複合</td><td>AI活用候補</td></tr>
+    <tr><td>ルールが「一部例外あり」</td><td>AI＋人の確認</td></tr>
+    <tr><td>上記以外</td><td>通常の自動化候補</td></tr>
+  </table></div>
+  <h3>時間短縮の仮定（改善後 分/件 が空欄のとき）</h3>
+  <div class="tablewrap"><table>
+    <tr><th>改善方式</th><th>仮定の短縮率</th><th>改善のイメージ</th></tr>
+    <tr><td>通常の自動化候補</td><td>70%</td><td>入力規則・テンプレート・転記・通知などをルール化</td></tr>
+    <tr><td>AI活用候補</td><td>50%</td><td>AIで要約・分類・情報抽出し、人が確認</td></tr>
+    <tr><td>AI＋人の確認</td><td>30%</td><td>AIが下書き・分類し、担当者が確認・承認</td></tr>
+    <tr><td>人の判断を中心</td><td>10%</td><td>判断は人に残し、AIは情報整理に限定</td></tr>
+    <tr><td>追加確認が必要</td><td>0%</td><td>例外条件・判断基準を整理してから決める</td></tr>
+  </table></div>
+  <p>計算式：月間削減時間 ＝（現状の分/件 − 改善後の分/件）× 月間処理件数 ÷ 60、年間 ＝ 月間 × 12</p>
+  <div class="warn">試算は計画段階の参考値で、実績・保証値ではありません。導入・保守の工数、AIの利用料、確認や例外対応にかかる時間は含みません。実際に試したら、実測の時間を「改善後 分/件」に入れて更新してください。</div>
+</section>
+
+<section id="faq">
+  <h2>13. よくある質問</h2>
+  <details><summary>入力した内容が消えてしまいました</summary>
+    <p>別のブラウザ・別のパソコン・シークレットウィンドウで開いていないか確認してください。保存はブラウザごとです。ブラウザのサイトデータを削除した場合は元に戻せないため、JSONファイルに保存したものを<span class="ui">ファイルを開く</span>で読み込んでください。</p></details>
+  <details><summary>担当者の列が意図せず増えました</summary>
+    <p>担当者名の表記ゆれ（「経理」「経理担当」、全角・半角スペースなど）があると別の列になります。表記をそろえてください。</p></details>
+  <details><summary>矢印が分かりにくい・重なって見えます</summary>
+    <p>工程の順番（行の並び）を、実際の流れに近い順に入れ替えると見やすくなります。差し戻しが多い場合は、判断を分けたり業務を分割したりするのも有効です。</p></details>
+  <details><summary>図形の中の文字が途中で切れます</summary>
+    <p>図形には2行まで表示します。全文は図形にマウスを重ねると見られます。作業内容は15文字程度を目安に短くまとめてください。</p></details>
+  <details><summary>入力した内容は講師や運営に見えますか？</summary>
+    <p>見えません。内容はお使いのブラウザの中だけに保存されます。講師が見られるのは、あなたがJSONファイルを提出した場合だけです。</p></details>
+  <details><summary>スマートフォンで使えますか？</summary>
+    <p>表示はできますが、工程表は横にスクロールして入力することになります。入力はパソコンでの利用をおすすめします。</p></details>
+</section>
+</main>
+</div>
+<footer>改善方式の分類と効果試算は参考情報です。業務変更の最終判断は利用者・業務責任者が行ってください。</footer>
+</body>
+</html>

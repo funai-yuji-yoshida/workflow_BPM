@@ -65,6 +65,7 @@ export default function App() {
           <h1>AI業務分解ナビ</h1>
           <p>業務を工程に分解し、担当者別のフロー図と改善候補を整理します</p>
         </div>
+        <a className="help" href="guide.html" target="_blank" rel="noopener">使い方</a>
       </header>
       <main>
         <div className="privacy" role="note">

@@ -35,6 +35,8 @@ npm run build    # dist/ に出力（相対パスなのでどのサブパスで�
 | `src/domain/analysis.ts` | 改善方式のルール判定・To-Be・効果試算（GAS版と同じルールと仮定短縮率） |
 | `src/domain/storage.ts` | ブラウザ保存・JSON書き出し／読み込み（不正値の補正） |
 | `src/components/` | 画面（フロー図、工程表、集計・試算・To-Be） |
+| `public/guide.html` | 使い方ページ（受講者・講師向け）。アプリ右上「使い方」から開く |
+| `scripts/guide-svg.ts` | 使い方ページの図を再生成：`npx vite-node scripts/guide-svg.ts`（描画を変えたら実行） |
 
 ## GitHub Pages 公開手順
 
