@@ -3,7 +3,7 @@
 講座参加者が業務を工程に分解し、担当者別の業務フロー図（As-Is／To-Be）と改善候補・効果試算を整理するツール。
 GAS版（`../Code.gs` `../Index.html`）を社外と共有するための静的Webアプリ版。
 
-- 状態：v1.1 初版
+- 状態：v1.2（時間記録・集計を追加）
 - リポジトリ：https://github.com/funai-yuji-yoshida/workflow_BPM
 - 公開URL：https://funai-yuji-yoshida.github.io/workflow_BPM/
 - 仕様：`../設計書.md`、表記ルール：`../フロー図表記ルール・データ追加案.md`
@@ -23,7 +23,7 @@ GAS版（`../Code.gs` `../Index.html`）を社外と共有するための静的W
 ```bash
 npm install
 npm run dev      # 開発サーバー
-npm test         # 単体テスト（フロー解析・判定・試算・ファイル読込）
+npm test         # 単体テスト（フロー解析・判定・試算・ファイル読込・時間集計）
 npm run build    # dist/ に出力（相対パスなのでどのサブパスでも動く）
 ```
 
@@ -35,6 +35,8 @@ npm run build    # dist/ に出力（相対パスなのでどのサブパスで�
 | `src/domain/analysis.ts` | 改善方式のルール判定・To-Be・効果試算（GAS版と同じルールと仮定短縮率） |
 | `src/domain/storage.ts` | ブラウザ保存・JSON書き出し／読み込み（不正値の補正） |
 | `src/components/` | 画面（フロー図、工程表、集計・試算・To-Be） |
+| `src/time/` | 時間記録の型・日付・集計（日週月・分/件・月換算・CSV）・保存（キー `bpm-navi:time:v1`） |
+| `src/components/time/` | 時間記録（FullCalendar）・入力ダイアログ・集計グラフ・ジャンル設定・業務への実測表示 |
 | `public/guide.html` | 使い方ページ（受講者・講師向け）。アプリ右上「使い方」から開く |
 | `scripts/guide-svg.ts` | 使い方ページの図を再生成：`npx vite-node scripts/guide-svg.ts`（描画を変えたら実行） |
 

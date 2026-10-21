@@ -7,6 +7,15 @@ import { downloadBlob, readTextFile } from './download';
 import { FlowView } from './components/FlowView';
 import { StepTable } from './components/StepTable';
 import { Results } from './components/Results';
+import { CalendarView } from './components/time/CalendarView';
+import { SummaryView } from './components/time/SummaryView';
+import { GenreSettings } from './components/time/GenreSettings';
+import { MeasuredBox } from './components/time/MeasuredBox';
+import { loadTimeStore, saveTimeStore } from './time/storage';
+import type { Genre, TimeStore } from './time/types';
+
+type View = 'flow' | 'time' | 'summary' | 'genres';
+const VIEWS: [View, string][] = [['time', '時間記録'], ['summary', '集計'], ['flow', '業務フロー'], ['genres', 'ジャンル設定']];
 
 function initialStore(): Store {
   const s = loadStore();
@@ -21,10 +30,23 @@ export default function App() {
   const [store, setStore] = useState<Store>(initialStore);
   const [notice, setNotice] = useState<{ text: string; error?: boolean } | null>(null);
   const [storageOk, setStorageOk] = useState(true);
+  const [time, setTime] = useState<TimeStore>(loadTimeStore);
+  const [timeOk, setTimeOk] = useState(true);
+  const [view, setView] = useState<View>('flow');
   const fileRef = useRef<HTMLInputElement>(null);
   const current = store.processes.find(p => p.processId === store.currentId) ?? store.processes[0];
 
   useEffect(() => { setStorageOk(saveStore(store)); }, [store]);
+  useEffect(() => { setTimeOk(saveTimeStore(time)); }, [time]);
+  const go = (v: View) => { setView(v); setNotice(null); window.scrollTo({ top: 0 }); };
+  /** 集計から「業務フローで分解する」：ひも付いた業務を開く。無ければジャンル名で業務を作ってひも付ける */
+  const decompose = (g: Genre) => {
+    if (g.processId && store.processes.some(p => p.processId === g.processId)) { setStore(s => ({ ...s, currentId: g.processId })); go('flow'); return; }
+    const p = newProcess({ title: g.name });
+    setStore(s => ({ processes: [p, ...s.processes], currentId: p.processId }));
+    setTime(t => ({ ...t, genres: t.genres.map(x => (x.genreId === g.genreId ? { ...x, processId: p.processId } : x)) }));
+    go('flow'); say(`「${g.name}」の業務を作成し、ジャンルにひも付けました。工程を入力してください。`);
+  };
 
   const say = (text: string, error = false) => setNotice({ text, error });
   const update = (patch: Partial<Process>) => setStore(s => ({ ...s, processes: s.processes.map(p => (p.processId === current.processId ? { ...p, ...patch, updatedAt: new Date().toISOString() } : p)) }));
@@ -67,11 +89,21 @@ export default function App() {
         </div>
         <a className="help" href="guide.html" target="_blank" rel="noopener">使い方</a>
       </header>
+      <nav className="views" aria-label="画面の切り替え">
+        <div className="views-in">
+          {VIEWS.map(([v, label]) => <button key={v} className={view === v ? 'on' : ''} aria-current={view === v ? 'page' : undefined} onClick={() => go(v)}>{label}</button>)}
+        </div>
+      </nav>
       <main>
         <div className="privacy" role="note">
-          入力内容は<b>このブラウザの中だけ</b>に保存され、サーバーには送信されません。別の端末で使う・講師に提出するときは「ファイルに保存（JSON）」を使ってください。
-          {!storageOk && <span className="err"> ※このブラウザでは自動保存が使えません。終了前に必ずファイルに保存してください。</span>}
+          入力内容は<b>このブラウザの中だけ</b>に保存され、サーバーには送信されません。{view === 'flow' ? '別の端末で使う・講師に提出するときは「ファイルに保存（JSON）」を使ってください。' : '時間記録は業務改善の材料を集めるためのもので、個人の評価には使いません。個人名・顧客名は書かず「顧客対応」「社内会議」のように書いてください。'}
+          {(!storageOk || !timeOk) && <span className="err"> ※このブラウザでは自動保存が使えません。終了前に必ずファイルに保存してください。</span>}
         </div>
+        {view !== 'flow' && notice && <p className={notice.error ? 'notice err' : 'notice'} role="status">{notice.text}</p>}
+        {view === 'time' && <CalendarView store={time} onChange={setTime} say={say} />}
+        {view === 'summary' && <SummaryView store={time} onDecompose={decompose} />}
+        {view === 'genres' && <GenreSettings store={time} processes={store.processes} onChange={setTime} say={say} />}
+        {view === 'flow' && <>
 
         <section className="panel">
           <div className="bar">
@@ -96,6 +128,7 @@ export default function App() {
             <label>月間処理件数<input type="number" min={0} value={current.monthlyVolume} placeholder="例：200" onChange={e => update({ monthlyVolume: e.target.value === '' ? '' : Math.max(0, Number(e.target.value) || 0) })} /></label>
           </div>
           <label>現在の困りごと<textarea value={current.painPoints} placeholder="例：確認に時間がかかる、担当者によって対応が異なる" onChange={e => update({ painPoints: e.target.value })} /></label>
+          <MeasuredBox process={current} time={time} onApplyVolume={n => { update({ monthlyVolume: n }); say(`月間処理件数を${n}件にしました`); }} onLink={() => go('genres')} />
         </section>
 
         <FlowView process={current} />
@@ -125,6 +158,7 @@ export default function App() {
             </table>
           </div>
         </section>
+        </>}
         <footer className="muted">改善方式の分類と効果試算は参考情報です。業務変更の最終判断は利用者・業務責任者が行ってください。実在の顧客の個人情報・機密情報は入力しないでください。</footer>
       </main>
     </>

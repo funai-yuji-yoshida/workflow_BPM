@@ -94,9 +94,10 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:v
     <li><a href="#analysis">改善分析</a></li>
     <li><a href="#result">図と結果を見る</a></li>
     <li><a href="#save">保存・提出</a></li>
+    <li><a href="#time">時間記録・集計</a></li>
   </ol>
   <div class="sub">
-    <ol start="9">
+    <ol start="10">
       <li><a href="#legend">図の見方</a></li>
       <li><a href="#tips">上手に書くコツ</a></li>
       <li><a href="#teacher">講師の方へ</a></li>
@@ -109,6 +110,7 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:v
 <main>
 <section id="about">
   <h2>1. このツールでできること</h2>
+  <p class="lead">（新機能）<a href="#time">時間記録</a>で、どの業務に時間を使っているかを実測してから分解することもできます。</p>
   <p class="lead">自分の業務を「誰が・どの順に・どこで判断し・どこで戻るか」に分解して、担当者別の業務フロー図にします。そのうえで、工程ごとに AI活用・自動化・人の判断 などの改善候補を整理し、改善後の姿（To-Be）と時間短縮の目安を試算します。</p>
   <figure>
     <div class="img"><img src="guide/flow-asis.svg" alt="請求書業務の業務フロー図の例。営業担当・経理担当・経理マネージャーの3列に工程が並び、承認・差し戻し・入金・未入金の分岐がある" loading="lazy"></div>
@@ -212,7 +214,7 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:v
   <p>さらに、改善後の姿を具体的に書きたいときは次の2つを入れます（空欄なら自動）。</p>
   <ul>
     <li><b>改善後の工程名</b>：例「入金データから自動更新」。空欄なら「ルールで自動化：〜」のような定型文になります。</li>
-    <li><b>改善後 分/件</b>：改善後の見込み時間。空欄なら方式ごとの仮定の短縮率で計算します（<a href="#rules">12章</a>）。</li>
+    <li><b>改善後 分/件</b>：改善後の見込み時間。空欄なら方式ごとの仮定の短縮率で計算します（<a href="#rules">13章</a>）。</li>
   </ul>
   <div class="warn">判定は入力内容にもとづく<b>簡易ルールによる仮説</b>で、AIが業務を理解して判断したものではありません。検討のたたき台として使い、最終判断は業務を知る人が行ってください。</div>
 </section>
@@ -244,8 +246,52 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:v
   <div class="tip">ファイルを開いても、今ある業務は上書きされません。新しい業務として一覧に追加されます。</div>
 </section>
 
+<section id="time">
+  <h2>9. 時間記録と集計（どの業務から改善するか決める）</h2>
+  <p>画面上部の<span class="ui">時間記録</span>で、自分の作業をカレンダーに記録できます。1〜2週間記録して<span class="ui">集計</span>を見ると、どの業務に時間を使っているかが分かり、<b>改善する業務を実測で選べます</b>。</p>
+  <div class="note">時間記録も<b>このブラウザの中だけ</b>に保存され、講師・運営を含め他人には見えません。業務改善の材料を集めるためのもので、個人の評価には使いません。</div>
+  <h3>記録する</h3>
+  <ol class="steps">
+    <li><span class="ui">時間記録</span>を開きます（パソコンは週表示、スマートフォンは日表示）。</li>
+    <li>作業した時間帯を<b>ドラッグ</b>します（15分単位）。スマートフォンでは右側（下側）の<span class="ui blue">＋ 記録を追加</span>を使います。</li>
+    <li>作業内容とジャンルを選んで<span class="ui blue">保存</span>。処理した件数が分かるときは<b>処理件数</b>も入れてください（例：請求書3件）。1件あたりの時間の計算に使います。</li>
+  </ol>
+  <ul>
+    <li>記録は<b>ドラッグで移動</b>、<b>下端をドラッグで長さ変更</b>、<b>クリックで編集・削除</b>できます。</li>
+    <li>週表示の日付の下の「1.5h / 8h」は、その日の記録済み時間の目安です（1日の勤務時間は<span class="ui">ジャンル設定</span>で変更）。</li>
+    <li>個人名・顧客名・会議の相手先は書かず、「顧客対応」「社内会議」のように書いてください。</li>
+  </ul>
+  <h3>入力を楽にする</h3>
+  <div class="tablewrap"><table>
+    <tr><th>よく使う作業</th><td>記録の入力画面で「よく使う作業に登録」にチェックすると、右側にボタンが並びます。押すと<b>対象の日の最後の記録の直後</b>に追加されます（時刻はあとから変更可）。</td></tr>
+    <tr><th>直前と同じ</th><td>入力画面の上のボタンで、直前の記録と同じ作業内容・ジャンルを入れられます。</td></tr>
+    <tr><th>コピー</th><td>「前日の記録をコピー」「前週の同じ曜日をコピー」で、対象の日に一括で写せます。</td></tr>
+    <tr><th>作業内容の候補</th><td>過去に入れた作業内容が候補に出ます。同じ作業内容を選ぶと前回のジャンルが自動で選ばれます。</td></tr>
+  </table></div>
+  <h3>集計を見る</h3>
+  <ul>
+    <li><span class="ui">集計</span>で<b>日・週・月・期間指定</b>を切り替え、◀ ▶で前後に移動します。</li>
+    <li>棒グラフはジャンル別の時間の積み上げです（月表示は週ごと）。<span class="ui">PNG保存</span>で画像にできます。</li>
+    <li>ジャンル別の表には、合計・割合・記録回数・処理件数・<b>分/件</b>・1日平均（記録した日のみで計算）が出ます。ジャンル名を押すと作業内容別の内訳が開きます。</li>
+    <li><span class="ui">集計CSV</span>・<span class="ui">記録一覧CSV</span>でExcel用のファイルを保存できます。</li>
+  </ul>
+  <h3>業務フローにつなげる</h3>
+  <ol class="steps">
+    <li>集計で時間の多い<b>上位3ジャンル</b>に<span class="ui">業務フローで分解する</span>ボタンが出ます。押すと、そのジャンル名の業務が作られ（ひも付け済みならその業務が開き）、<span class="ui">業務フロー</span>画面に移ります。</li>
+    <li>業務フロー画面の業務欄に<b>実測値</b>（期間・合計時間・分/件・月換算の件数）が表示されます。<span class="ui">月間処理件数に反映</span>で、効果試算の件数を実測にできます。</li>
+    <li>工程の所要時間の合計と実測の分/件が大きく違うときは注意が出ます。工程の抜けや見積もりを見直してください。</li>
+  </ol>
+  <p class="muted">月換算の件数 ＝ 処理件数 ÷ 記録した日数 × 月の稼働日数（初期値20日、<span class="ui">ジャンル設定</span>で変更）。既存の業務とひも付けるときは、<span class="ui">ジャンル設定</span>の「業務フローの業務」で選びます。</p>
+  <h3>ジャンル設定</h3>
+  <ul>
+    <li>初期ジャンル：定型処理／資料作成／メール・チャット対応／電話・来客対応／会議／確認・承認／調べもの／移動／その他。名前・色・並び順は自由に変えられ、追加もできます。</li>
+    <li>記録で使っているジャンルは削除できません。使わなくなったら「表示」のチェックを外してください（過去の記録と集計は残ります）。</li>
+    <li>時間記録の一式は<span class="ui">時間記録をファイルに保存（JSON）</span>で保存し、別の端末で<span class="ui">ファイルから読み込む</span>で移せます（読み込むと、その端末の時間記録は置き換わります）。</li>
+  </ul>
+</section>
+
 <section id="legend">
-  <h2>9. 図の見方</h2>
+  <h2>10. 図の見方</h2>
   <div class="tablewrap"><table>
     <tr><th>表示</th><th>意味</th></tr>
     <tr><td>縦の列（レーン）</td><td>担当者。左から、工程に登場した順に並びます。</td></tr>
@@ -259,7 +305,7 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:v
 </section>
 
 <section id="tips">
-  <h2>10. 上手に書くコツ</h2>
+  <h2>11. 上手に書くコツ</h2>
   <div class="two">
     <div>
       <p class="good">◯ よい例</p>
@@ -286,8 +332,9 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:v
 </section>
 
 <section id="teacher">
-  <h2>11. 講師の方へ（受講者の入力をまとめて見る）</h2>
+  <h2>12. 講師の方へ（受講者の入力をまとめて見る）</h2>
   <ol class="steps">
+    <li>（時間記録を使う場合）受講者に1〜2週間記録してもらい、集計の上位ジャンルから分解する業務を選んでもらいます。時間記録そのものは提出させず、業務フローのJSONだけを提出してもらうのがおすすめです。</li>
     <li>受講者に、作成者（氏名）を入れてから<span class="ui">ファイルに保存（JSON）</span>し、提出するよう案内します。</li>
     <li>集まったJSONファイルを講師のパソコンに置き、アプリの<span class="ui">ファイルを開く</span>で<b>まとめて選択</b>（Ctrl／Shift＋クリック）します。</li>
     <li>画面下部の「この端末に保存されている業務」に、業務名・作成者・工程数・短縮見込みの一覧が表示されます。<span class="ui">開く</span>で各受講者のフロー図と分析を確認できます。</li>
@@ -303,7 +350,7 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:v
 </section>
 
 <section id="rules">
-  <h2>12. 判定ルールと試算の前提</h2>
+  <h2>13. 判定ルールと試算の前提</h2>
   <h3>改善方式の判定（上から順に当てはまったもの）</h3>
   <div class="tablewrap"><table>
     <tr><th>条件</th><th>判定</th></tr>
@@ -329,7 +376,7 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:v
 </section>
 
 <section id="faq">
-  <h2>13. よくある質問</h2>
+  <h2>14. よくある質問</h2>
   <details><summary>入力した内容が消えてしまいました</summary>
     <p>別のブラウザ・別のパソコン・シークレットウィンドウで開いていないか確認してください。保存はブラウザごとです。ブラウザのサイトデータを削除した場合は元に戻せないため、JSONファイルに保存したものを<span class="ui">ファイルを開く</span>で読み込んでください。</p></details>
   <details><summary>担当者の列が意図せず増えました</summary>
